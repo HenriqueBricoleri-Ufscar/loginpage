@@ -26,10 +26,8 @@ const handleUserCreation = async (req, res) => {
 const handleLogin = async (req, res) => {
     try {
         const {email, password} = req.body;
-        console.log(req.body);
 
         const user = await userService.loginGetUserByEmail({email});
-        console.log(user);
 
         if(!user){
             console.log('Achei não patiao');
@@ -37,6 +35,7 @@ const handleLogin = async (req, res) => {
                 success: false,
                 message: 'Usuário não encontrado' 
             });
+            return;
         }
         
         //Essa validação deveria ser feita pelos middlewares, mas tudo bem ser aqui
@@ -49,6 +48,7 @@ const handleLogin = async (req, res) => {
                 success: false,
                 message: 'Senha incorreta!'
             })
+            return;
         } else {
             const userDTO = {
                 email: user.email,
