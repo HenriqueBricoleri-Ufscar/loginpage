@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { api } from '../Api.ts'
-import { replace, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import GlobalStyle from './global.ts'
 import * as C from './components/styles/LoginStyles.ts'
