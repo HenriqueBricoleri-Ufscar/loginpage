@@ -1,19 +1,30 @@
-import React, { use } from 'react'
 import { useState } from 'react'
 import { api } from '../Api.ts'
+import { replace, useNavigate } from 'react-router-dom'
 
 import GlobalStyle from './global.ts'
 import * as C from './components/styles/LoginStyles.ts'
 
 const login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('Teste123@gmail.com');
+    const [password, setPassword] = useState('senhateste123');
+    const navigate = useNavigate()
 
     const handleSubmmit = async () => {
         try {
             const data = await api.login(email, password);
-            console.log('Login sucesso:', data);
-            localStorage.setItem('token', data.token);
+
+            if(data.success){
+                console.log('Login sucesso:', data);
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userData', JSON.stringify(data.data));
+
+                navigate('home', {replace: true});
+
+            } else {
+                console.error('Erro ao logar');
+            }
+
         } catch (error) {
             console.error('Erro no login:', error);
         }
